@@ -1,6 +1,7 @@
 from PIL import Image
 import os
 import random
+import numpy
 
 # Input folders
 image_dir = "unedited_images"
@@ -23,7 +24,8 @@ os.makedirs("membrane/train/aug", exist_ok=True)
 os.makedirs("membrane/validation/aug", exist_ok=True)
 
 # Settings
-validation_percentage = 0.2  # 20%
+validation_percentage = 0.2  # 20% of patches for validation
+sidewalkThreshold = 0.99  # Threshold for skipping mostly white patches
 TARGET_HEIGHT = 1024   # Resize target height before patching
 PATCH_SIZE = 512       # Size of each cropped patch
 STRIDE = 256           # Horizontal stride for sliding window
@@ -63,6 +65,13 @@ def process_pair(image_path, label_path):
         for y in range(0, TARGET_HEIGHT - PATCH_SIZE + 1, STRIDE):
             img_patch = img.crop((x, y, x + PATCH_SIZE, y + PATCH_SIZE))
             lbl_patch = lbl.crop((x, y, x + PATCH_SIZE, y + PATCH_SIZE))
+            
+            # --- Skip blank (mostly white) patches ---
+            arr = numpy.array(lbl_patch)
+            white_ratio = numpy.mean(arr > 250)  # % of white pixels
+            if white_ratio > sidewalkThreshold:             # adjustable threshold
+                continue
+
             patches.append((img_patch, lbl_patch))
     return patches
 
