@@ -1,2 +1,4 @@
 .venv/
 membrane.zip
+membrane/validation/
+membrane/train/
