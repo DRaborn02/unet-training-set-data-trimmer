@@ -16,14 +16,19 @@ pip install -r requirements.txt
 ### Usage
 
 * Place your full-resolution raw images in:
+
 unedited_images/
+
 unedited_labels/
 
 * Run the script:
+
 python data_trimmer.py
 
 * The processed, trimmed dataset will appear under:
+
 membrane/train/
+
 membrane/validation/
 
 ## Folder Structure
@@ -31,17 +36,25 @@ membrane/validation/
 ### Input folders:
 
 unedited_images/
+
 unedited_labels/
 
 ### Output folders (created automatically):
 
 membrane/
+
 ├── train/
+
 │   ├── image/
+
 │   └── label/
+
 ├── validation/
+
 │   ├── image/
+
 │   └── label/
+
 └── test/
 
 ## Notes
