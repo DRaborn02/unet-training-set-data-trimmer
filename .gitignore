@@ -2,15 +2,14 @@
 __pycache__/
 src/__pycache__/
 
-membrane/validation/
-membrane/train/
-membrane/test/
+membrane/validation/*
+membrane/train/*
 membrane.zip
 
-orthoimages/images/
-orthoimages/labels/
-orthoimages/unlabeled_images/
+orthoimages/images/*
+orthoimages/labels/*
+orthoimages/unlabeled_images/*
 
-pointclouds/processed/
-pointclouds/raw/
-pointclouds/split/
+pointclouds/processed/*
+pointclouds/raw/*
+pointclouds/split/*
