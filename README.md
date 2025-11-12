@@ -15,29 +15,46 @@ pip install -r requirements.txt
 
 ### Usage
 
-* Place your full-resolution raw images in:
+* Place your .las or .ply files in:
 
-unedited_images/
+pointclouds/raw
 
-unedited_labels/
+* Modify any settings you'd like for the resulting training membrain at the top of main.py, particularly:
 
-* Run the script:
+validation_percentage = 0.2  # 20% of patches for validation
 
-python data_trimmer.py
+sidewalkThreshold = 0.99  # Threshold for skipping mostly white patches
 
-* The processed, trimmed dataset will appear under:
+
+* Ensure you're in /src and run the script:
+
+python main.py
+
+* The pointcloud files will then be turned into .las files (if they were .ply), divide the .las files into smaller sections, and turn those sections into orthoimages.
+
+* You will then be prompted to label the cracks in each orthoimage. The images/labels will end up in the /orthoImages folder
+
+* Finally, the image/label pairs will be processed into a trimmed dataset under:
 
 membrane/train/
 
 membrane/validation/
 
+* You can then use the same settings in main.py and the resulting membrane folder to train a new unet model using [unetboe2025](https://github.com/yealina/unetboe2025/).
+
 ## Folder Structure
 
 ### Input folders:
 
-unedited_images/
+orthoImages/
 
-unedited_labels/
+├── images/ # premade label/image pairs go here
+
+├── labels/ # premade label/image pairs go here
+
+pointclouds/
+
+├── raw/ # unlabeled .las/.ply files go here
 
 ### Output folders (created automatically):
 
@@ -65,8 +82,5 @@ membrane/
 
 * To include a testing dataset, you can manually copy colored cropped images to membrane/test/. One has been provided in the files for now.
 
-* The current images provided in unedited_images and unedited_labels are from [Sidewalk Concrete Slab Joint Dataset](https://www.yuhanjiang.com/dataset/). Our eventual goal is to train the membrane on our own lidar scans from the rover.
-
 ### Future Plans
 
-Our next step would likely be to create a script that creates the unedited images we need from our lidar scans. We would need to manually draw in the labels using some sort of photo editing software such as Krita or Gimp.
