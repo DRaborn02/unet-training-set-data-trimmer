@@ -7,7 +7,9 @@ membrane/train/*
 membrane.zip
 
 orthoimages/images/*
+!orthoimages/images/.gitkeep
 orthoimages/labels/*
+!orthoimages/labels/.gitkeep
 orthoimages/unlabeled_images/*
 
 pointclouds/processed/*
