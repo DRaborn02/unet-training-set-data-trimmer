@@ -11,5 +11,6 @@ orthoimages/labels/*
 orthoimages/unlabeled_images/*
 
 pointclouds/processed/*
-pointclouds/raw/*
 pointclouds/split/*
+pointclouds/raw/*
+!pointclouds/raw/.gitkeep
