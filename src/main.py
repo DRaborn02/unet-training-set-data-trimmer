@@ -187,61 +187,61 @@ if __name__ == "__main__":
                 dst = os.path.join(processed_dir, f)
                 try:
                     os.rename(src, dst)
-                    print(f"Moved processed PLY → {dst}")
+                    print(f"Moved processed PLY -> {dst}")
                 except Exception as e:
                     print(f"Failed to move {f}: {e}")
     else:
         print("No new pointclouds found in raw.")
 
 
-    # Step 2: Split LAS files in 'raw' → 'split' (then move processed to 'processed')
-    las_files_raw = [f for f in os.listdir(raw_dir) if f.lower().endswith(".las")]
-    if las_files_raw:
-        print(f"Splitting {len(las_files_raw)} LAS file(s) from raw...")
-        for las_file in las_files_raw:
-            las_path = os.path.join(raw_dir, las_file)
-            try:
-                split_output_paths = split_las(las_path, split_dir)
-                print(f"Split {las_file} → {len(split_output_paths)} files.")
+    # # Step 2: Split LAS files in 'raw' -> 'split' (then move processed to 'processed')
+    # las_files_raw = [f for f in os.listdir(raw_dir) if f.lower().endswith(".las")]
+    # if las_files_raw:
+    #     print(f"Splitting {len(las_files_raw)} LAS file(s) from raw...")
+    #     for las_file in las_files_raw:
+    #         las_path = os.path.join(raw_dir, las_file)
+    #         try:
+    #             split_output_paths = split_las(las_path, split_dir)
+    #             print(f"Split {las_file} -> {len(split_output_paths)} files.")
                 
-                # Move original LAS to 'processed'
-                dest_path = os.path.join(processed_dir, las_file)
-                os.replace(las_path, dest_path)
-            except Exception as e:
-                print(f"Error splitting {las_file}: {e}")
-    else:
-        print("No new LAS files to split in raw.")
+    #             # Move original LAS to 'processed'
+    #             dest_path = os.path.join(processed_dir, las_file)
+    #             os.replace(las_path, dest_path)
+    #         except Exception as e:
+    #             print(f"Error splitting {las_file}: {e}")
+    # else:
+    #     print("No new LAS files to split in raw.")
 
-    # Step 3: Convert all new LAS files in 'split' to orthoimages
-    las_files_split = [f for f in os.listdir(split_dir) if f.lower().endswith(".las")]
-    if las_files_split:
-        print(f"Generating orthoimages for {len(las_files_split)} LAS file(s)...")
-        p2o_main(split_dir, unlabeled_image_dir)
-        # Move processed LAS to 'processed'
-        for las_file in las_files_split:
-            os.rename(os.path.join(split_dir, las_file),
-                      os.path.join(processed_dir, las_file))
-    else:
-        print("No new LAS files in split to process into orthoimages.")
+    # # Step 3: Convert all new LAS files in 'split' to orthoimages
+    # las_files_split = [f for f in os.listdir(split_dir) if f.lower().endswith(".las")]
+    # if las_files_split:
+    #     print(f"Generating orthoimages for {len(las_files_split)} LAS file(s)...")
+    #     p2o_main(split_dir, unlabeled_image_dir)
+    #     # Move processed LAS to 'processed'
+    #     for las_file in las_files_split:
+    #         os.rename(os.path.join(split_dir, las_file),
+    #                   os.path.join(processed_dir, las_file))
+    # else:
+    #     print("No new LAS files in split to process into orthoimages.")
 
-    # Step 4: Label unlabeled orthoimages
-    unlabeled_imgs = [f for f in os.listdir(unlabeled_image_dir)
-                      if f.lower().endswith(IMAGE_EXTS)]
-    if unlabeled_imgs:
-        print(f"Labeling {len(unlabeled_imgs)} unlabeled image(s)...")
-        label_all_images(unlabeled_image_dir, image_dir, label_dir)
-    else:
-        print("No unlabeled images found to label.")
+    # # Step 4: Label unlabeled orthoimages
+    # unlabeled_imgs = [f for f in os.listdir(unlabeled_image_dir)
+    #                   if f.lower().endswith(IMAGE_EXTS)]
+    # if unlabeled_imgs:
+    #     print(f"Labeling {len(unlabeled_imgs)} unlabeled image(s)...")
+    #     label_all_images(unlabeled_image_dir, image_dir, label_dir)
+    # else:
+    #     print("No unlabeled images found to label.")
 
-    print("\n--- Preprocessing pipeline complete ---")
+    # print("\n--- Preprocessing pipeline complete ---")
     
-    #Step 5: Delete previous dataset and create new dataset from labeled images
-    print("Clearing old training and validation data...")
-    clear_directory(train_img_dir)
-    clear_directory(train_lbl_dir)
-    clear_directory(val_img_dir)
-    clear_directory(val_lbl_dir)
-    print("Dataset directories cleared.")
+    # #Step 5: Delete previous dataset and create new dataset from labeled images
+    # print("Clearing old training and validation data...")
+    # clear_directory(train_img_dir)
+    # clear_directory(train_lbl_dir)
+    # clear_directory(val_img_dir)
+    # clear_directory(val_lbl_dir)
+    # print("Dataset directories cleared.")
 
-    print("Creating new dataset from labeled images...")
-    createDataSet()
+    # print("Creating new dataset from labeled images...")
+    # createDataSet()
